@@ -7,6 +7,7 @@ import {
   deleteUser,
   updateUser,
 } from "../controllers/userControllers.js"
+import { protectedRoute } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
