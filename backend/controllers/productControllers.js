@@ -31,6 +31,51 @@ const getProduct = asyncHandler(async (req, res) => {
   }
 })
 
+// @Description  -  Add Product
+// @Method       -  POST
+// @Access       -  Public
+// @Route        -  /api/products/add
+const addProduct = asyncHandler(async (req, res) => {
+  const {
+    user,
+    name,
+    description,
+    image,
+    brand,
+    category,
+    price,
+    countInStock,
+  } = req.body
+
+  if (user && name && description && brand && category) {
+    const newProduct = await Product.create({
+      user,
+      name,
+      description,
+      brand,
+      category,
+    })
+
+    if (image) {
+      newProduct.image = image
+      await newProduct.save()
+    }
+    if (price) {
+      newProduct.price = price
+      await newProduct.save()
+    }
+    if (countInStock) {
+      newProduct.image = countInStock
+      await newProduct.save()
+    }
+
+    res.status(201).json(newProduct)
+  } else {
+    res.status(404)
+    throw Error("Complete all fields!")
+  }
+})
+
 // @Description  -  Delete Product
 // @Method       -  DELETE
 // @Access       -  Private
@@ -48,4 +93,4 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 })
 
-export { getAllProducts, getProduct, deleteProduct }
+export { getAllProducts, getProduct, deleteProduct, addProduct }
