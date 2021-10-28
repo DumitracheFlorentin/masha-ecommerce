@@ -1,0 +1,13 @@
+.product__image {
+  max-height: 12em;
+  min-height: 12em;
+}
+
+.product__title {
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.product__link {
+  text-decoration: none;
+}

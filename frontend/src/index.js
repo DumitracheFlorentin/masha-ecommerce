@@ -11,6 +11,9 @@ import store from "./store"
 // Import Bootstrap Theme
 import "./bootstrap.min.css"
 
+// Import Style
+import "./style/style.css"
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>
