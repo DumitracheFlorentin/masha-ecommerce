@@ -3,10 +3,14 @@ import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension"
 
 // Import Reducers
-import { allProductsReducer } from "./reducers/productReducers"
+import {
+  allProductsReducer,
+  specificProductReducer,
+} from "./reducers/productReducers"
 
 const reducer = combineReducers({
   allProducts: allProductsReducer,
+  specificProduct: specificProductReducer,
 })
 
 const initialState = {}
