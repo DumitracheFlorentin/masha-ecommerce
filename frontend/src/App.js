@@ -1,7 +1,14 @@
+import { Switch, Route } from "react-router-dom"
+
+// Import Pages
+import Main from "./pages/Main"
+
 export default function App() {
   return (
-    <div>
-      <h1>hello</h1>
-    </div>
+    <Switch>
+      <Route path="/" exact>
+        <Main />
+      </Route>
+    </Switch>
   )
 }
