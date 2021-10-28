@@ -65,7 +65,7 @@ const addProduct = asyncHandler(async (req, res) => {
       await newProduct.save()
     }
     if (countInStock) {
-      newProduct.image = countInStock
+      newProduct.countInStock = countInStock
       await newProduct.save()
     }
 
