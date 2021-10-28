@@ -2,6 +2,11 @@ import express from "express"
 import dotenv from "dotenv"
 import colors from "colors"
 import databaseConnection from "./config/database.js"
+import {
+  errorMessage,
+  errorHandlerMiddleware,
+} from "./middleware/errorMiddleware.js"
+import userRoutes from "./routes/userRoutes.js"
 
 // Config Dotenv
 dotenv.config()
@@ -16,8 +21,11 @@ databaseConnection()
 app.use(express.json())
 
 // Routes
+app.use("/api/users", userRoutes)
 
 // Middlewares
+app.use(errorMessage)
+app.use(errorHandlerMiddleware)
 
 // Listen Server
 const PORT = process.env.PORT || 5000

@@ -18,6 +18,7 @@ const productSchema = mongoose.Schema(
     image: {
       type: String,
       require: true,
+      default: "/images/defaultImage.png",
     },
     brand: {
       type: String,
@@ -30,10 +31,12 @@ const productSchema = mongoose.Schema(
     price: {
       type: String,
       require: true,
+      default: 0,
     },
     countInStock: {
       type: String,
       require: true,
+      default: 0,
     },
   },
   {
