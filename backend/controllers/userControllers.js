@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler"
 import User from "../models/userModel.js"
+import generateToken from "../utils/generateToken.js"
 
 // @Description  -  GET All Users
 // @Method       -  GET
@@ -77,6 +78,7 @@ const loginUser = asyncHandler(async (req, res) => {
         lastName: existsUser.lastName,
         email: existsUser.email,
         isAdmin: existsUser.isAdmin,
+        token: generateToken(existsUser._id),
       })
     } else {
       res.status(404)
@@ -128,4 +130,33 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 })
 
-export { getAllUsers, getUser, registerUser, updateUser, loginUser, deleteUser }
+// @Description  -  User Details
+// @Method       -  GET
+// @Access       -  Private
+// @Route        -  /api/users/profile/details
+const detailsUser = asyncHandler(async (req, res) => {
+  const existsUser = req.user
+
+  if (existsUser) {
+    res.status(200).json({
+      id: existsUser._id,
+      firstName: existsUser.firstName,
+      lastName: existsUser.lastName,
+      email: existsUser.email,
+      isAdmin: existsUser.isAdmin,
+    })
+  } else {
+    res.status(404)
+    throw Error("User not found!")
+  }
+})
+
+export {
+  getAllUsers,
+  getUser,
+  registerUser,
+  updateUser,
+  loginUser,
+  deleteUser,
+  detailsUser,
+}

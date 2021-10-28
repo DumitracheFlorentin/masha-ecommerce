@@ -18,7 +18,6 @@ const protectedRoute = asyncHandler(async (req, res, next) => {
 
       next()
     } catch (error) {
-      console.error(error)
       res.status(401)
       throw new Error("Not authorizated!")
     }
