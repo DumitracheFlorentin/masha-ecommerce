@@ -8,6 +8,7 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
+  REGISTER_USER_RESET,
 } from "../constants/userConstants"
 
 export const loggedUserReducer = (state = {}, action) => {
@@ -36,6 +37,9 @@ export const registerUserReducer = (state = {}, action) => {
 
     case REGISTER_USER_FAIL:
       return { loading: false, error: action.payload }
+
+    case REGISTER_USER_RESET:
+      return { loading: false, registeredInfo: {} }
 
     default:
       return state

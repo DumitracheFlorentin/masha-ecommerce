@@ -37,43 +37,53 @@ export default function Login() {
   }, [userInfo])
 
   return (
-    <FormContainer>
-      <h1 className="my-5">Log In</h1>
+    <>
+      <Link to="/">
+        <Button className="m-5">Go Back</Button>
+      </Link>
 
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <CustomAlert message={error} color="danger" />
-      ) : (
-        userInfo &&
-        userInfo.message && (
-          <CustomAlert message={userInfo.message} color="danger" />
-        )
-      )}
+      <FormContainer>
+        <h1 className="my-5">Log In</h1>
 
-      <Form onSubmit={loginHandler}>
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter Email" ref={emailRef} />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter Password"
-            ref={passwordRef}
-          />
-        </Form.Group>
-        <Button type="submit" className="mt-1">
-          Log In
-        </Button>
-      </Form>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <CustomAlert message={error} color="danger" />
+        ) : (
+          userInfo &&
+          userInfo.message && (
+            <CustomAlert message={userInfo.message} color="danger" />
+          )
+        )}
 
-      <Row className="mt-4">
-        <Col>
-          Do not have an account? <Link to="/register">Register</Link>
-        </Col>
-      </Row>
-    </FormContainer>
+        <Form onSubmit={loginHandler}>
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter Email"
+              ref={emailRef}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter Password"
+              ref={passwordRef}
+            />
+          </Form.Group>
+          <Button type="submit" className="mt-1">
+            Log In
+          </Button>
+        </Form>
+
+        <Row className="mt-4">
+          <Col>
+            Do not have an account? <Link to="/register">Register</Link>
+          </Col>
+        </Row>
+      </FormContainer>
+    </>
   )
 }

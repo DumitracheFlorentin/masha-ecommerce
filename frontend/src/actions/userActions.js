@@ -10,6 +10,7 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_REQUEST,
   REGISTER_USER_FAIL,
+  REGISTER_USER_RESET,
 } from "../constants/userConstants"
 
 export const loggedUserAction = (email, password) => async (dispatch) => {
@@ -56,6 +57,10 @@ export const registerUserAction =
       })
     }
   }
+
+export const registerUserResetAction = () => async (dispatch) => {
+  dispatch({ type: REGISTER_USER_RESET })
+}
 
 export const userDetailsAction = (access_token) => async (dispatch) => {
   try {
