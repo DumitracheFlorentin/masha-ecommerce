@@ -93,16 +93,15 @@ const loginUser = asyncHandler(async (req, res) => {
 // @Description  -  Update User
 // @Method       -  PATCH
 // @Access       -  Private
-// @Route        -  /api/users/:id
+// @Route        -  /api/users/profile/update
 const updateUser = asyncHandler(async (req, res) => {
-  const { firstName, lastName, password, isAdmin } = req.body
-  const existsUser = await User.findById(req.params.id)
+  const { firstName, lastName, password } = req.body
+  const existsUser = await User.findById(req.user.id)
 
   if (existsUser) {
     existsUser.firstName = firstName ? firstName : existsUser.firstName
     existsUser.lastName = lastName ? lastName : existsUser.lastName
     existsUser.password = password ? password : existsUser.password
-    existsUser.isAdmin = isAdmin ? isAdmin : existsUser.isAdmin
 
     const updatedUser = await existsUser.save()
 
