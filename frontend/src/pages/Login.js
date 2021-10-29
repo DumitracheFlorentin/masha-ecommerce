@@ -1,4 +1,5 @@
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
+import { useHistory } from "react-router"
 import { Form, Button, Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
@@ -11,6 +12,7 @@ import CustomAlert from "../components/CustomAlert"
 import { loggedUserAction } from "../actions/userActions"
 
 export default function Login() {
+  const history = useHistory()
   const dispatch = useDispatch()
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -26,6 +28,14 @@ export default function Login() {
     )
   }
 
+  useEffect(() => {
+    if (userInfo && userInfo.token) {
+      localStorage.setItem("masha-user-token", userInfo.token)
+
+      history.push("/")
+    }
+  }, [userInfo])
+
   return (
     <FormContainer>
       <h1 className="my-5">Log In</h1>
@@ -34,14 +44,10 @@ export default function Login() {
         <Loader />
       ) : error ? (
         <CustomAlert message={error} color="danger" />
-      ) : userInfo && userInfo.message ? (
-        <CustomAlert message={userInfo.message} color="danger" />
       ) : (
         userInfo &&
-        userInfo.token && (
-          <>
-            <h1>Logged In</h1>
-          </>
+        userInfo.message && (
+          <CustomAlert message={userInfo.message} color="danger" />
         )
       )}
 
