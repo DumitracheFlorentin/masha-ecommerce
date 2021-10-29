@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useHistory } from "react-router-dom"
 import {
   Container,
   Row,
@@ -18,6 +19,7 @@ import Loader from "../components/Loader"
 import CustomAlert from "../components/CustomAlert"
 
 export default function SpecificProduct() {
+  const history = useHistory()
   const params = useParams()
   const dispatch = useDispatch()
   const specificProduct = useSelector((state) => state.specificProduct)
@@ -32,9 +34,13 @@ export default function SpecificProduct() {
     }
   }
 
+  const addToCartHandler = () => {
+    history.push(`/cart/${params.id}?qty=${qty}`)
+  }
+
   useEffect(() => {
     dispatch(specificProductAction(params.id))
-  }, [dispatch])
+  }, [dispatch, params.id])
 
   return (
     <>
@@ -94,7 +100,7 @@ export default function SpecificProduct() {
                           onChange={(e) => setQty(e.target.value)}
                         >
                           {qtyArray.map((item) => (
-                            <option>{item}</option>
+                            <option key={item}>{item}</option>
                           ))}
                         </Form.Control>
                       </Col>
@@ -106,6 +112,7 @@ export default function SpecificProduct() {
                     <Button
                       type="button"
                       disabled={parseInt(product.countInStock) === 0 && true}
+                      onClick={addToCartHandler}
                     >
                       Add To Cart
                     </Button>
