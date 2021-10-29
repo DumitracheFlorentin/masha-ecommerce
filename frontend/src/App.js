@@ -5,6 +5,7 @@ import Main from "./pages/Main"
 import SpecificProduct from "./pages/SpecificProduct"
 import Cart from "./pages/Cart"
 import Login from "./pages/Login"
+import Register from "./pages/Register"
 
 export default function App() {
   return (
@@ -19,6 +20,10 @@ export default function App() {
 
       <Route path="/login" exact>
         <Login />
+      </Route>
+
+      <Route path="/register" exact>
+        <Register />
       </Route>
 
       <Route path="/cart">
