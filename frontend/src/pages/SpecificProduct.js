@@ -35,7 +35,11 @@ export default function SpecificProduct() {
   }
 
   const addToCartHandler = () => {
-    history.push(`/cart/${params.id}?qty=${qty}`)
+    if (localStorage.getItem("masha-user-token")) {
+      history.push(`/cart/${params.id}?qty=${qty}`)
+    } else {
+      history.push(`/login`)
+    }
   }
 
   useEffect(() => {
