@@ -11,6 +11,7 @@ import {
   loggedUserReducer,
   userDetailsReducer,
   registerUserReducer,
+  updateUserReducer,
 } from "./reducers/userReducers"
 
 const reducer = combineReducers({
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   loggedUser: loggedUserReducer,
   userDetails: userDetailsReducer,
   registerUser: registerUserReducer,
+  updateUser: updateUserReducer,
 })
 
 const initialState = {}

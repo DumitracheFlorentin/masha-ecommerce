@@ -11,6 +11,10 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_FAIL,
   REGISTER_USER_RESET,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_RESET,
 } from "../constants/userConstants"
 
 export const loggedUserAction = (email, password) => async (dispatch) => {
@@ -82,4 +86,39 @@ export const userDetailsAction = (access_token) => async (dispatch) => {
           : error.message,
     })
   }
+}
+
+export const updateUserAction =
+  (access_token, firstName, lastName, password) => async (dispatch) => {
+    try {
+      dispatch({ type: USER_UPDATE_REQUEST })
+
+      const { data } = await axios.patch(
+        "/api/users/profile/update",
+        {
+          firstName,
+          lastName,
+          password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+
+      dispatch({ type: USER_UPDATE_SUCCESS, payload: data })
+    } catch (error) {
+      dispatch({
+        type: USER_UPDATE_FAIL,
+        payload:
+          error.response && error.response.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const updateUserReset = () => async (dispatch) => {
+  dispatch({ type: USER_UPDATE_RESET })
 }
