@@ -34,7 +34,7 @@ export default function Login() {
 
       history.push("/")
     }
-  }, [userInfo])
+  }, [userInfo, history])
 
   return (
     <>

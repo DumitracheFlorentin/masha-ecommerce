@@ -44,7 +44,7 @@ export default function Login() {
 
       dispatch(registerUserResetAction())
     }
-  }, [registeredInfo])
+  }, [registeredInfo, dispatch, history])
 
   return (
     <>
