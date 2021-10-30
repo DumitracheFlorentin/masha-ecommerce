@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useLocation, useHistory } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 // Import Components
 import Navigation from "../components/Navigation"
@@ -23,7 +23,7 @@ export default function Cart() {
         console.log("Watch cart")
       }
     }
-  }, [dispatch, history])
+  }, [dispatch, history, id, qty])
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import { LinkContainer } from "react-router-bootstrap"
-import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap"
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons"
 import { useDispatch, useSelector } from "react-redux"
