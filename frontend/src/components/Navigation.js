@@ -39,7 +39,7 @@ export default function Navigation() {
           <Nav>
             {loggedIn && loggedIn.firstName ? (
               <>
-                <NavDropdown title={loggedIn.firstName}>
+                <NavDropdown title="Dashboard">
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
