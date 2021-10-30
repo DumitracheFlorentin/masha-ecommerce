@@ -8,6 +8,7 @@ import {
 } from "./middleware/errorMiddleware.js"
 import userRoutes from "./routes/userRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
+import cartRoutes from "./routes/cartRoutes.js"
 
 // Config Dotenv
 dotenv.config()
@@ -24,6 +25,7 @@ app.use(express.json())
 // Routes
 app.use("/api/users", userRoutes)
 app.use("/api/products", productRoutes)
+app.use("/api/carts", cartRoutes)
 
 // Middlewares
 app.use(errorMessage)

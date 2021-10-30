@@ -1,22 +1,36 @@
 import mongoose from "mongoose"
 
 const cartSchema = mongoose.Schema({
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },
   productItems: [
     {
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Product",
+      },
+      image: {
+        type: String,
+        required: true,
+        default: "/images/defaultImage.png",
+      },
+      name: {
+        type: String,
+        required: true,
+      },
       qty: {
         type: Number,
         required: true,
         default: 1,
       },
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
+      price: {
+        type: Number,
         required: true,
-        ref: "Product",
+        default: 0,
       },
     },
   ],
