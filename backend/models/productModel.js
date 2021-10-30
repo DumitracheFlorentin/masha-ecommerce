@@ -4,38 +4,38 @@ const productSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      require: true,
+      required: true,
       ref: "User",
     },
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     description: {
       type: String,
-      require: true,
+      required: true,
     },
     image: {
       type: String,
-      require: true,
+      required: true,
       default: "/images/defaultImage.png",
     },
     brand: {
       type: String,
-      require: true,
+      required: true,
     },
     category: {
       type: String,
-      require: true,
+      required: true,
     },
     price: {
       type: String,
-      require: true,
+      required: true,
       default: 0,
     },
     countInStock: {
       type: String,
-      require: true,
+      required: true,
       default: 0,
     },
   },
