@@ -10,6 +10,7 @@ import Loader from "../components/Loader"
 import CustomAlert from "../components/CustomAlert"
 
 import { loggedUserAction } from "../actions/userActions"
+import { createCartAction } from "../actions/cartActions"
 
 export default function Login() {
   const history = useHistory()
@@ -31,6 +32,8 @@ export default function Login() {
   useEffect(() => {
     if (userInfo && userInfo.token) {
       localStorage.setItem("masha-user-token", userInfo.token)
+
+      dispatch(createCartAction(localStorage.getItem("masha-user-token")))
 
       history.push("/")
     }

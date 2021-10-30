@@ -14,6 +14,12 @@ import {
   updateUserReducer,
 } from "./reducers/userReducers"
 
+import {
+  cartDetailsReducer,
+  pushItemCartReducer,
+  createCartReducer,
+} from "./reducers/cartReducers"
+
 const reducer = combineReducers({
   allProducts: allProductsReducer,
   specificProduct: specificProductReducer,
@@ -21,6 +27,9 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   registerUser: registerUserReducer,
   updateUser: updateUserReducer,
+  cartDetails: cartDetailsReducer,
+  pushItemCart: pushItemCartReducer,
+  createCart: createCartReducer,
 })
 
 const initialState = {}
