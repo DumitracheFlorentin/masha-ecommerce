@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { LinkContainer } from "react-router-bootstrap"
-import { Navbar, Container, Nav } from "react-bootstrap"
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons"
 import { useDispatch, useSelector } from "react-redux"
@@ -29,17 +29,19 @@ export default function Navigation() {
           </LinkContainer>
 
           <Nav>
-            {!loading && loggedIn && loggedIn.id ? (
+            {loggedIn ? (
               <>
+                <NavDropdown title={loggedIn.firstName}>
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item>Logout</NavDropdown.Item>
+                </NavDropdown>
+
                 <LinkContainer to="/cart">
                   <Nav.Link>
-                    <FontAwesomeIcon icon={faShoppingCart} className="mx-1" />{" "}
+                    <FontAwesomeIcon icon={faShoppingCart} className="mx-2" />
                     Cart
-                  </Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/profile">
-                  <Nav.Link>
-                    <FontAwesomeIcon icon={faUser} className="mx-1" /> Profile
                   </Nav.Link>
                 </LinkContainer>
               </>
