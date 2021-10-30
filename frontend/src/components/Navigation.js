@@ -1,20 +1,28 @@
 import { useEffect } from "react"
+import { useHistory } from "react-router-dom"
 import { LinkContainer } from "react-router-bootstrap"
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap"
+import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons"
 import { useDispatch, useSelector } from "react-redux"
 
-import { userDetailsAction } from "../actions/userActions"
+import { userDetailsAction, logoutAction } from "../actions/userActions"
 
 export default function Navigation() {
+  const history = useHistory()
   const dispatch = useDispatch()
   const token = localStorage.getItem("masha-user-token")
     ? localStorage.getItem("masha-user-token")
     : null
 
   const userDetails = useSelector((state) => state.userDetails)
-  const { loading, loggedIn } = userDetails
+  const { loggedIn } = userDetails
+
+  const logoutHandler = () => {
+    dispatch(logoutAction())
+
+    history.push("/login")
+  }
 
   useEffect(() => {
     dispatch(userDetailsAction(token))
@@ -29,13 +37,15 @@ export default function Navigation() {
           </LinkContainer>
 
           <Nav>
-            {loggedIn ? (
+            {loggedIn && loggedIn.firstName ? (
               <>
                 <NavDropdown title={loggedIn.firstName}>
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
-                  <NavDropdown.Item>Logout</NavDropdown.Item>
+                  <NavDropdown.Item type="button" onClick={logoutHandler}>
+                    Log Out
+                  </NavDropdown.Item>
                 </NavDropdown>
 
                 <LinkContainer to="/cart">

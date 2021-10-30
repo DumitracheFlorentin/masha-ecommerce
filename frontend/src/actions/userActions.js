@@ -4,9 +4,11 @@ import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
+  LOGIN_USER_RESET,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_DETAILS_RESET,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_REQUEST,
   REGISTER_USER_FAIL,
@@ -121,4 +123,12 @@ export const updateUserAction =
 
 export const updateUserReset = () => async (dispatch) => {
   dispatch({ type: USER_UPDATE_RESET })
+}
+
+export const logoutAction = () => async (dispatch) => {
+  dispatch({ type: USER_UPDATE_RESET })
+  dispatch({ type: LOGIN_USER_RESET })
+  dispatch({ type: USER_DETAILS_RESET })
+  dispatch({ type: REGISTER_USER_RESET })
+  localStorage.removeItem("masha-user-token")
 }
