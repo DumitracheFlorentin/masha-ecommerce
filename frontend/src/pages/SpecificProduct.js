@@ -24,7 +24,6 @@ export default function SpecificProduct() {
   const params = useParams()
   const dispatch = useDispatch()
   const specificProduct = useSelector((state) => state.specificProduct)
-  const updatedCart = useSelector((state) => state.pushItemCart)
   const { loading, product, error } = specificProduct
   const [qty, setQty] = useState(1)
 
@@ -38,7 +37,14 @@ export default function SpecificProduct() {
 
   const addToCartHandler = () => {
     if (localStorage.getItem("masha-user-token")) {
-      history.push(`/cart/${params.id}?qty=${qty}`)
+      dispatch(
+        pushItemCartAction(
+          localStorage.getItem("masha-user-token"),
+          params.id,
+          qty
+        )
+      )
+      history.push(`/cart`)
     } else {
       history.push(`/login`)
     }
