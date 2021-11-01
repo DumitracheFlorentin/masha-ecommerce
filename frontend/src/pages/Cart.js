@@ -19,10 +19,6 @@ export default function Cart() {
   const removeItemCart = useSelector((state) => state.removeItemCart)
   const { loading, error, cartInfo } = cartDetails
 
-  const deleteItemHandler = (id) => {
-    dispatch(removeItemCartAction(token, id))
-  }
-
   const totalPrice =
     cartInfo &&
     cartInfo.productItems &&
@@ -36,6 +32,14 @@ export default function Cart() {
     cartInfo && cartInfo.productItems && cartInfo.productItems.length
 
   const shippingTax = totalPrice < 500 ? 100 : 25
+
+  const deleteItemHandler = (id) => {
+    dispatch(removeItemCartAction(token, id))
+  }
+
+  const placeOrderHandler = () => {
+    history.push("/cart/checkout")
+  }
 
   useEffect(() => {
     if (!token) {
@@ -172,6 +176,7 @@ export default function Cart() {
                   <Button
                     type="button"
                     className={totalPrice === 0 && "disabled"}
+                    onClick={placeOrderHandler}
                   >
                     Place Order
                   </Button>
