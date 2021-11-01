@@ -143,16 +143,23 @@ export default function Cart() {
                     </Col>
                   </ListGroup.Item>
 
-                  <ListGroup.Item>
-                    <Col className="d-flex justify-content-between">
-                      <strong>Total</strong>
+                  {totalPrice !== 0 && (
+                    <ListGroup.Item>
+                      <Col className="d-flex justify-content-between">
+                        <strong>Total</strong>
 
-                      <h5>${shippingTax + totalPrice}</h5>
-                    </Col>
-                  </ListGroup.Item>
+                        <h5>${shippingTax + totalPrice}</h5>
+                      </Col>
+                    </ListGroup.Item>
+                  )}
                 </ListGroup>
                 <Row className="p-2">
-                  <Button type="button">Place Order</Button>
+                  <Button
+                    type="button"
+                    className={totalPrice === 0 && "disabled"}
+                  >
+                    Place Order
+                  </Button>
                 </Row>
               </Col>
             </Row>
