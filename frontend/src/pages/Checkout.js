@@ -14,6 +14,7 @@ import {
 // Import Components
 import { cartDetailsAction } from "../actions/cartActions"
 import { userDetailsAction } from "../actions/userActions"
+import { createOrderAction } from "../actions/orderActions"
 import Loader from "../components/Loader"
 import CustomAlert from "../components/CustomAlert"
 
@@ -40,7 +41,9 @@ export default function Checkout() {
 
   const shippingTax = totalPrice < 500 ? 100 : 25
 
-  const createOrderHandler = () => {}
+  const createOrderHandler = (phone, address, shippingTax, totalPrice) => {
+    dispatch(createOrderAction(token, phone, address, shippingTax, totalPrice))
+  }
 
   useEffect(() => {
     if (token) {
@@ -215,7 +218,18 @@ export default function Checkout() {
       </Row>
 
       <Row className="mt-3 mb-5">
-        <Button variant="success" type="button" onClick={createOrderHandler}>
+        <Button
+          variant="success"
+          type="button"
+          onClick={() =>
+            createOrderHandler(
+              phoneRef.current.value,
+              addressRef.current.value,
+              shippingTax,
+              totalPrice
+            )
+          }
+        >
           Place Order (${totalPrice})
         </Button>
       </Row>
