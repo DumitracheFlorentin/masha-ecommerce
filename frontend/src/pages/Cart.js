@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { useLocation, useHistory, Link } from "react-router-dom"
+import { useEffect } from "react"
+import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { Container, Row, Col, Image, ListGroup } from "react-bootstrap"
 import Loader from "../components/Loader"
@@ -7,7 +7,7 @@ import CustomAlert from "../components/CustomAlert"
 
 // Import Components
 import Navigation from "../components/Navigation"
-import { cartDetailsAction, pushItemCartAction } from "../actions/cartActions"
+import { cartDetailsAction } from "../actions/cartActions"
 
 export default function Cart() {
   const history = useHistory()
@@ -18,9 +18,13 @@ export default function Cart() {
   const cartDetails = useSelector((state) => state.cartDetails)
   const { loading, error, cartInfo } = cartDetails
 
+  const deleteItemHandler = () => {
+    console.log("delete")
+  }
+
   useEffect(() => {
     dispatch(cartDetailsAction(token))
-  }, [dispatch, history, pushItemCart.loading])
+  }, [dispatch, history, pushItemCart.loading, token])
   return (
     <>
       <Navigation />
@@ -41,7 +45,7 @@ export default function Cart() {
                   const tPrice = product.price * product.qty
 
                   return (
-                    <ListGroup.Item>
+                    <ListGroup.Item key={product.productId}>
                       <Row className="my-2">
                         <Col md={2}>
                           <Image src={product.image} fluid rounded />
@@ -86,7 +90,12 @@ export default function Cart() {
                           <p>
                             <strong>Delete</strong>
                           </p>
-                          <h5 style={{ cursor: "pointer" }}>X</h5>
+                          <h5
+                            style={{ cursor: "pointer" }}
+                            onClick={deleteItemHandler}
+                          >
+                            X
+                          </h5>
                         </Col>
                       </Row>
                     </ListGroup.Item>
