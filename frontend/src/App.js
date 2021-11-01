@@ -7,6 +7,7 @@ import Cart from "./pages/Cart"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Profile from "./pages/Profile"
+import Checkout from "./pages/Checkout"
 
 export default function App() {
   return (
@@ -31,8 +32,12 @@ export default function App() {
         <Profile />
       </Route>
 
-      <Route path="/cart">
+      <Route path="/cart" exact>
         <Cart />
+      </Route>
+
+      <Route path="/cart/checkout" exact>
+        <Checkout />
       </Route>
     </Switch>
   )
