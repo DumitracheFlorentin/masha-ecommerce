@@ -9,6 +9,9 @@ import {
   PUSH_ITEM_CART_FAIL,
   CREATE_CART_FAIL,
   CART_DETAILS_FAIL,
+  REMOVE_ITEM_CART_REQUEST,
+  REMOVE_ITEM_CART_SUCCESS,
+  REMOVE_ITEM_CART_FAIL,
 } from "../constants/cartConstants"
 
 export const cartDetailsAction = (access_token) => async (dispatch) => {
@@ -78,6 +81,33 @@ export const pushItemCartAction =
     } catch (error) {
       dispatch({
         type: PUSH_ITEM_CART_FAIL,
+        payload:
+          error.response && error.response.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const removeItemCartAction =
+  (access_token, productId) => async (dispatch) => {
+    try {
+      dispatch({ type: REMOVE_ITEM_CART_REQUEST })
+
+      const { data } = await axios.patch(
+        "/api/carts/removeItem",
+        { productId },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+
+      dispatch({ type: REMOVE_ITEM_CART_SUCCESS, payload: data })
+    } catch (error) {
+      dispatch({
+        type: REMOVE_ITEM_CART_FAIL,
         payload:
           error.response && error.response.message
             ? error.response.data.message

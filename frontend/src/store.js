@@ -18,6 +18,7 @@ import {
   cartDetailsReducer,
   pushItemCartReducer,
   createCartReducer,
+  removeItemCartReducer,
 } from "./reducers/cartReducers"
 
 const reducer = combineReducers({
@@ -30,6 +31,7 @@ const reducer = combineReducers({
   cartDetails: cartDetailsReducer,
   pushItemCart: pushItemCartReducer,
   createCart: createCartReducer,
+  removeItemCart: removeItemCartReducer,
 })
 
 const initialState = {}

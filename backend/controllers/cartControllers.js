@@ -78,4 +78,37 @@ const newItemCart = asyncHandler(async (req, res) => {
   }
 })
 
-export { detailsCart, createCart, newItemCart }
+// @Description  -  Remove Specific Item From Cart
+// @Method       -  PATCH
+// @Access       -  PRIVATE
+// @Route        -  /api/carts/removeItem
+const removeItemCart = asyncHandler(async (req, res) => {
+  const userId = req.user.id
+  const { productId } = req.body
+
+  const existsCart = await Cart.findOne({ userId })
+
+  if (existsCart) {
+    let index
+
+    existsCart.productItems.map((item, ind) => {
+      if (item.productId == productId) {
+        index = ind
+      }
+    })
+
+    if (index > -1) {
+      existsCart.productItems.splice(index, 1)
+    }
+
+    const updatedCart = await existsCart.save()
+
+    res.status(204).json({ info: updatedCart })
+  } else {
+    res.status(404)
+
+    throw Error("Cart not found!")
+  }
+})
+
+export { detailsCart, createCart, newItemCart, removeItemCart }

@@ -8,6 +8,9 @@ import {
   PUSH_ITEM_CART_FAIL,
   CREATE_CART_FAIL,
   CART_DETAILS_FAIL,
+  REMOVE_ITEM_CART_REQUEST,
+  REMOVE_ITEM_CART_SUCCESS,
+  REMOVE_ITEM_CART_FAIL,
 } from "../constants/cartConstants"
 
 export const cartDetailsReducer = (state = {}, action) => {
@@ -50,6 +53,22 @@ export const pushItemCartReducer = (state = {}, action) => {
 
     case PUSH_ITEM_CART_FAIL:
       return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const removeItemCartReducer = (state = {}, action) => {
+  switch (action.type) {
+    case REMOVE_ITEM_CART_REQUEST:
+      return { loading: true }
+
+    case REMOVE_ITEM_CART_SUCCESS:
+      return { loading: false, updatedArray: action.payload }
+
+    case REMOVE_ITEM_CART_FAIL:
+      return { loading: false, error: action.payload }
+
     default:
       return state
   }

@@ -7,7 +7,7 @@ import CustomAlert from "../components/CustomAlert"
 
 // Import Components
 import Navigation from "../components/Navigation"
-import { cartDetailsAction } from "../actions/cartActions"
+import { cartDetailsAction, removeItemCartAction } from "../actions/cartActions"
 
 export default function Cart() {
   const history = useHistory()
@@ -16,15 +16,16 @@ export default function Cart() {
 
   const pushItemCart = useSelector((state) => state.pushItemCart)
   const cartDetails = useSelector((state) => state.cartDetails)
+  const removeItemCart = useSelector((state) => state.removeItemCart)
   const { loading, error, cartInfo } = cartDetails
 
-  const deleteItemHandler = () => {
-    console.log("delete")
+  const deleteItemHandler = (id) => {
+    dispatch(removeItemCartAction(token, id))
   }
 
   useEffect(() => {
     dispatch(cartDetailsAction(token))
-  }, [dispatch, history, pushItemCart.loading, token])
+  }, [dispatch, history, pushItemCart.loading, token, removeItemCart.loading])
   return (
     <>
       <Navigation />
@@ -32,6 +33,10 @@ export default function Cart() {
         <Row>
           <Col md={8}>
             <h1 className="my-5">Cart</h1>
+
+            {cartInfo && cartInfo.productItems.length === 0 && (
+              <CustomAlert message="Your cart is empty!" color="warning" />
+            )}
 
             <ListGroup variant="flush">
               {loading ? (
@@ -92,7 +97,7 @@ export default function Cart() {
                           </p>
                           <h5
                             style={{ cursor: "pointer" }}
-                            onClick={deleteItemHandler}
+                            onClick={() => deleteItemHandler(product.productId)}
                           >
                             X
                           </h5>
