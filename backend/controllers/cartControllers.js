@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler"
 import Cart from "../models/cartModel.js"
+import Product from "../models/productModel.js"
 
 // @Description  -  Get Details About Specific Cart
 // @Method       -  GET
@@ -48,15 +49,17 @@ const createCart = asyncHandler(async (req, res) => {
 // @Route        -  /api/carts/addItem
 const newItemCart = asyncHandler(async (req, res) => {
   const userId = req.user.id
-  const { productId, image, name, qty, price } = req.body
+  const { productId, qty } = req.body
 
   const existsCart = await Cart.findOne({ userId })
+  const existsProduct = await Product.findById(productId)
+  const { image, name, price } = existsProduct
 
   if (existsCart) {
     let ok = 0
     existsCart.productItems.map((item) => {
       if (item.productId == productId) {
-        item.qty += qty
+        item.qty += parseInt(qty)
         ok = 1
       }
     })
@@ -65,7 +68,9 @@ const newItemCart = asyncHandler(async (req, res) => {
       existsCart.productItems.push({ productId, image, name, qty, price })
     }
 
-    res.status(204).json(existsCart)
+    const updatedCart = await existsCart.save()
+
+    res.status(204).json({ info: updatedCart })
   } else {
     res.status(404)
 

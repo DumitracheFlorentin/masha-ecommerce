@@ -43,10 +43,10 @@ export const createCartReducer = (state = {}, action) => {
 export const pushItemCartReducer = (state = {}, action) => {
   switch (action.type) {
     case PUSH_ITEM_CART_REQUEST:
-      return { loading: true }
+      return { loading: TextTrackCueList }
 
     case PUSH_ITEM_CART_SUCCESS:
-      return { loading: false, itemInfo: action.payload }
+      return { loading: false }
 
     case PUSH_ITEM_CART_FAIL:
       return { loading: false, error: action.payload }

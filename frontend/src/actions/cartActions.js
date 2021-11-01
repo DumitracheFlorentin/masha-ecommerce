@@ -60,13 +60,13 @@ export const createCartAction = (token) => async (dispatch) => {
 }
 
 export const pushItemCartAction =
-  (access_token, productId, image, name, qty, price) => async (dispatch) => {
+  (access_token, productId, qty) => async (dispatch) => {
     try {
       dispatch({ type: PUSH_ITEM_CART_REQUEST })
 
-      const { data } = await axios.patch(
+      await axios.patch(
         "/api/carts/addItem",
-        { productId, image, name, qty, price },
+        { productId, qty },
         {
           headers: {
             Authorization: `Bearer ${access_token}`,
@@ -74,7 +74,7 @@ export const pushItemCartAction =
         }
       )
 
-      dispatch({ type: PUSH_ITEM_CART_SUCCESS, payload: data })
+      dispatch({ type: PUSH_ITEM_CART_SUCCESS })
     } catch (error) {
       dispatch({
         type: PUSH_ITEM_CART_FAIL,

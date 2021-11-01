@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 import { specificProductAction } from "../actions/productActions"
+import { pushItemCartAction } from "../actions/cartActions"
 
 // Import Components
 import Navigation from "../components/Navigation"
@@ -23,6 +24,7 @@ export default function SpecificProduct() {
   const params = useParams()
   const dispatch = useDispatch()
   const specificProduct = useSelector((state) => state.specificProduct)
+  const updatedCart = useSelector((state) => state.pushItemCart)
   const { loading, product, error } = specificProduct
   const [qty, setQty] = useState(1)
 
@@ -44,6 +46,10 @@ export default function SpecificProduct() {
 
   useEffect(() => {
     dispatch(specificProductAction(params.id))
+
+    if (localStorage.getItem("masha-security-cart")) {
+      localStorage.removeItem("masha-security-cart")
+    }
   }, [dispatch, params.id])
 
   return (
