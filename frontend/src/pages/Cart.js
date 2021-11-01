@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { Container, Row, Col, Image, ListGroup, Button } from "react-bootstrap"
 import Loader from "../components/Loader"
@@ -25,17 +25,22 @@ export default function Cart() {
 
   const totalPrice =
     cartInfo &&
+    cartInfo.productItems &&
     cartInfo.productItems.reduce(
       (prevValue, currentValue) =>
         prevValue + currentValue.price * currentValue.qty,
       0
     )
 
-  const totalItems = cartInfo && cartInfo.productItems.length
+  const totalItems =
+    cartInfo && cartInfo.productItems && cartInfo.productItems.length
 
   const shippingTax = totalPrice < 500 ? 100 : 25
 
   useEffect(() => {
+    if (!token) {
+      history.push("/login")
+    }
     dispatch(cartDetailsAction(token))
   }, [dispatch, history, pushItemCart.loading, token, removeItemCart.loading])
   return (
@@ -59,6 +64,7 @@ export default function Cart() {
                       color="warning"
                     />
                   ) : (
+                    cartInfo.productItems &&
                     cartInfo.productItems.map((product) => {
                       const tPrice = product.price * product.qty
 
@@ -66,20 +72,29 @@ export default function Cart() {
                         <ListGroup.Item key={product.productId}>
                           <Row className="my-2">
                             <Col md={2}>
-                              <Image src={product.image} rounded fluid />
+                              <Link to={`/products/${product.productId}`}>
+                                <Image src={product.image} rounded fluid />
+                              </Link>
                             </Col>
-                            <Col md={3}>
-                              <p>
-                                <strong>Name:</strong>
-                              </p>
-                              <h5>{product.name}</h5>
+
+                            <Col md={3} style={{ cursor: "pointer" }}>
+                              <Link
+                                className="linkClass"
+                                to={`/products/${product.productId}`}
+                              >
+                                <p>
+                                  <strong>Name</strong>
+                                </p>
+                                <h5>{product.name}</h5>
+                              </Link>
                             </Col>
+
                             <Col
                               md={2}
                               className="d-flex flex-column align-items-center"
                             >
                               <p>
-                                <strong>Price:</strong>
+                                <strong>Price</strong>
                               </p>
                               <h5>${product.price}</h5>
                             </Col>
@@ -88,7 +103,7 @@ export default function Cart() {
                               className="d-flex flex-column align-items-center"
                             >
                               <p>
-                                <strong>Quantity:</strong>
+                                <strong>Quantity</strong>
                               </p>
                               <h5>{product.qty}</h5>
                             </Col>
@@ -97,7 +112,7 @@ export default function Cart() {
                               className="d-flex flex-column align-items-center"
                             >
                               <p>
-                                <strong>Total:</strong>
+                                <strong>Total</strong>
                               </p>
                               <h5>${tPrice}</h5>
                             </Col>
