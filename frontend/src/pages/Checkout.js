@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap"
 
 // Import Components
-import { cartDetailsAction } from "../actions/cartActions"
+import { cartDetailsAction, clearCart } from "../actions/cartActions"
 import { userDetailsAction } from "../actions/userActions"
 import { createOrderAction } from "../actions/orderActions"
 import Loader from "../components/Loader"
@@ -43,6 +43,12 @@ export default function Checkout() {
 
   const createOrderHandler = (phone, address, shippingTax, totalPrice) => {
     dispatch(createOrderAction(token, phone, address, shippingTax, totalPrice))
+
+    if (phoneRef.current.value && addressRef.current.value) {
+      dispatch(clearCart(token))
+
+      history.push("/profile")
+    }
   }
 
   useEffect(() => {
@@ -230,7 +236,7 @@ export default function Checkout() {
             )
           }
         >
-          Place Order (${totalPrice})
+          Place Order (${totalPrice + shippingTax})
         </Button>
       </Row>
     </Container>
