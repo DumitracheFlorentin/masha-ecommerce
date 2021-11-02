@@ -68,18 +68,25 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
 
+  console.log(email)
+
   if (email) {
     const existsUser = await User.findOne({ email })
 
-    if (await existsUser.comparePassword(password)) {
-      res.status(200).json({
-        id: existsUser._id,
-        firstName: existsUser.firstName,
-        lastName: existsUser.lastName,
-        email: existsUser.email,
-        isAdmin: existsUser.isAdmin,
-        token: generateToken(existsUser._id),
-      })
+    if (existsUser) {
+      if (await existsUser.comparePassword(password)) {
+        res.status(200).json({
+          id: existsUser._id,
+          firstName: existsUser.firstName,
+          lastName: existsUser.lastName,
+          email: existsUser.email,
+          isAdmin: existsUser.isAdmin,
+          token: generateToken(existsUser._id),
+        })
+      } else {
+        res.status(404)
+        throw Error("Invalid email or password!")
+      }
     } else {
       res.status(404)
       throw Error("Invalid email or password!")
