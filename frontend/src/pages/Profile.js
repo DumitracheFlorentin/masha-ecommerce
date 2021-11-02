@@ -147,6 +147,7 @@ export default function Profile() {
                 ) : (
                   <ListGroup variant="flush">
                     {specificOrders.orders &&
+                      specificOrders.orders.length > 0 &&
                       specificOrders.orders.map((order, index) => {
                         const orderDate = new Date(order.createdAt)
 
