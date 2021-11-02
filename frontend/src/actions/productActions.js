@@ -6,6 +6,9 @@ import {
   SPECIFIC_PRODUCT_REQUEST,
   SPECIFIC_PRODUCT_SUCCESS,
   SPECIFIC_PRODUCT_FAIL,
+  UPDATE_PRODUCT_REQUEST,
+  UPDATE_PRODUCT_SUCCESS,
+  UPDATE_PRODUCT_FAIL,
 } from "../constants/productConstants"
 
 export const allProductsAction = () => async (dispatch) => {
@@ -43,3 +46,32 @@ export const specificProductAction = (id) => async (dispatch) => {
     })
   }
 }
+
+export const updateProductAction =
+  (id, name, description, image, brand, category, price, countInStock, qty) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_PRODUCT_REQUEST })
+
+      const { data } = await axios.patch(`/api/products/${id}`, {
+        name,
+        description,
+        image,
+        brand,
+        category,
+        price,
+        countInStock,
+        qty,
+      })
+
+      dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data })
+    } catch (error) {
+      dispatch({
+        type: UPDATE_PRODUCT_FAIL,
+        payload:
+          error.response && error.response.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }

@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap"
 
 // Import Components
+import { updateProductAction } from "../actions/productActions"
 import { cartDetailsAction, clearCart } from "../actions/cartActions"
 import { userDetailsAction } from "../actions/userActions"
 import { createOrderAction } from "../actions/orderActions"
@@ -46,6 +47,22 @@ export default function Checkout() {
 
     if (phoneRef.current.value && addressRef.current.value) {
       dispatch(clearCart(token))
+
+      cartDetails.cartInfo.productItems.map((product) => {
+        dispatch(
+          updateProductAction(
+            product.productId,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            product.qty
+          )
+        )
+      })
 
       history.push("/profile")
     }

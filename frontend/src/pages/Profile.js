@@ -27,6 +27,7 @@ export default function Profile() {
   const { loading, error, loggedIn } = userDetails
 
   const updateUser = useSelector((state) => state.updateUser)
+  const updateProduct = useSelector((state) => state.updateProduct)
 
   const [firstName, setFirstName] = useState()
   const [lastName, setLastName] = useState()
@@ -37,6 +38,14 @@ export default function Profile() {
 
     dispatch(updateUserAction(token, firstName, lastName, password))
   }
+
+  useEffect(() => {
+    if (token) {
+      dispatch(specificOrdersAction(token))
+    } else {
+      history.push("/login")
+    }
+  }, [updateProduct])
 
   useEffect(() => {
     if (token) {
@@ -142,7 +151,7 @@ export default function Profile() {
                         const orderDate = new Date(order.createdAt)
 
                         return (
-                          <ListGroup.Item key={order._id} className="mb-3">
+                          <ListGroup.Item key={order._id}>
                             <Link
                               to={`/profile/orders/${order._id}`}
                               className="linkClass "
