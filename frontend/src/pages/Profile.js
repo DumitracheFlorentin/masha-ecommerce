@@ -45,7 +45,7 @@ export default function Profile() {
     } else {
       history.push("/login")
     }
-  }, [updateProduct])
+  }, [updateProduct, token, history, dispatch])
 
   useEffect(() => {
     if (token) {

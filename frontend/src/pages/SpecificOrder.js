@@ -11,9 +11,6 @@ import {
   Image,
 } from "react-bootstrap"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons"
-
 // Import Components
 import { specificOrderAction } from "../actions/orderActions"
 import Loader from "../components/Loader"

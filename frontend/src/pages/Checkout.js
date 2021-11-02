@@ -62,6 +62,7 @@ export default function Checkout() {
             product.qty
           )
         )
+        return <></>
       })
 
       history.push("/profile")
