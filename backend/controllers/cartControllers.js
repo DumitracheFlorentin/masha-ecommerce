@@ -70,7 +70,7 @@ const newItemCart = asyncHandler(async (req, res) => {
 
     const updatedCart = await existsCart.save()
 
-    res.status(204).json({ info: updatedCart })
+    res.json(updatedCart)
   } else {
     res.status(404)
 
@@ -103,7 +103,7 @@ const removeItemCart = asyncHandler(async (req, res) => {
 
     const updatedCart = await existsCart.save()
 
-    res.status(204).json({ info: updatedCart })
+    res.json(updatedCart)
   } else {
     res.status(404)
 
@@ -125,7 +125,7 @@ const clearCart = asyncHandler(async (req, res) => {
 
     const updatedCart = await existsCart.save()
 
-    res.status(204).json(updatedCart)
+    res.json(updatedCart)
   } else {
     res.status(404)
 
