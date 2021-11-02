@@ -22,7 +22,10 @@ import {
   clearCartReducer,
 } from "./reducers/cartReducers"
 
-import { createOrderReducer } from "./reducers/orderReducers"
+import {
+  createOrderReducer,
+  specificOrdersReducer,
+} from "./reducers/orderReducers"
 
 const reducer = combineReducers({
   allProducts: allProductsReducer,
@@ -37,6 +40,7 @@ const reducer = combineReducers({
   removeItemCart: removeItemCartReducer,
   clearCart: clearCartReducer,
   createOrder: createOrderReducer,
+  specificOrders: specificOrdersReducer,
 })
 
 const initialState = {}

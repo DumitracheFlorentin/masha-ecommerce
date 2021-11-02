@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom"
-import { Container, Row, Col, Form, Button } from "react-bootstrap"
+import { useHistory, Link } from "react-router-dom"
+import { Container, Row, Col, Form, Button, ListGroup } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons"
 
 // Import Components
 import Navigation from "../components/Navigation"
@@ -12,12 +15,15 @@ import {
   updateUserAction,
   updateUserReset,
 } from "../actions/userActions"
+import { specificOrdersAction } from "../actions/orderActions"
 
 export default function Profile() {
   const dispatch = useDispatch()
   const history = useHistory()
+  const token = localStorage.getItem("masha-user-token")
 
   const userDetails = useSelector((state) => state.userDetails)
+  const specificOrders = useSelector((state) => state.specificOrders)
   const { loading, error, loggedIn } = userDetails
 
   const updateUser = useSelector((state) => state.updateUser)
@@ -29,24 +35,18 @@ export default function Profile() {
   const updateUserDetailsHandler = (e) => {
     e.preventDefault()
 
-    dispatch(
-      updateUserAction(
-        localStorage.getItem("masha-user-token"),
-        firstName,
-        lastName,
-        password
-      )
-    )
+    dispatch(updateUserAction(token, firstName, lastName, password))
   }
 
   useEffect(() => {
-    if (localStorage.getItem("masha-user-token")) {
-      dispatch(userDetailsAction(localStorage.getItem("masha-user-token")))
+    if (token) {
+      dispatch(specificOrdersAction(token))
+      dispatch(userDetailsAction(token))
       dispatch(updateUserReset())
     } else {
       history.push("/login")
     }
-  }, [dispatch, history])
+  }, [dispatch, history, token])
 
   useEffect(() => {
     if (!loading && loggedIn) {
@@ -124,6 +124,89 @@ export default function Profile() {
               </Col>
               <Col md={9}>
                 <h3>Your Orders</h3>
+
+                {specificOrders.loading ? (
+                  <Loader />
+                ) : specificOrders.error ? (
+                  <CustomAlert message={specificOrders.error} color="danger" />
+                ) : specificOrders.orders &&
+                  specificOrders.orders.length === 0 ? (
+                  <CustomAlert
+                    message="You do not have any orders"
+                    color="warning"
+                  />
+                ) : (
+                  <ListGroup variant="flush">
+                    {specificOrders.orders &&
+                      specificOrders.orders.map((order, index) => {
+                        const orderDate = new Date(order.createdAt)
+
+                        return (
+                          <ListGroup.Item key={order._id} className="mb-3">
+                            <Link
+                              to={`/profile/orders/${order._id}`}
+                              className="linkClass "
+                            >
+                              <Row className="orderHover pt-3">
+                                <Col md={1}>
+                                  <strong>Nr.</strong>
+                                  <p>{index + 1}</p>
+                                </Col>
+                                <Col md={4}>
+                                  <strong>Order Id</strong>
+                                  <p>{order._id}</p>
+                                </Col>
+                                <Col
+                                  md={2}
+                                  className="d-flex flex-column align-items-center"
+                                >
+                                  <strong>Price</strong>
+                                  <p>
+                                    $
+                                    {parseInt(order.shippingTax) +
+                                      parseInt(order.totalPrice)}
+                                  </p>
+                                </Col>
+                                <Col
+                                  md={2}
+                                  className="d-flex flex-column align-items-center"
+                                >
+                                  <strong>Date</strong>
+                                  <p>{orderDate.toLocaleDateString("en-US")}</p>
+                                </Col>
+                                <Col
+                                  md={1}
+                                  className="d-flex flex-column align-items-center"
+                                >
+                                  <strong>Paid</strong>
+                                  <p>
+                                    <FontAwesomeIcon
+                                      icon={order.isPaid ? faCheck : faTimes}
+                                      className="mx-2"
+                                    />
+                                  </p>
+                                </Col>
+                                <Col
+                                  md={2}
+                                  className="d-flex flex-column align-items-center"
+                                >
+                                  <strong>Delivered</strong>
+                                  <p>
+                                    <FontAwesomeIcon
+                                      icon={
+                                        order.isDelivered ? faCheck : faTimes
+                                      }
+                                      className="mx-2"
+                                    />
+                                  </p>
+                                </Col>
+                              </Row>
+                            </Link>
+                          </ListGroup.Item>
+                        )
+                      })}
+                  </ListGroup>
+                )}
               </Col>
             </Row>
           )
