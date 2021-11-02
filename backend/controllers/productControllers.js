@@ -93,4 +93,48 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 })
 
-export { getAllProducts, getProduct, deleteProduct, addProduct }
+// @Description  -  Update Specific Product
+// @Method       -  Patch
+// @Access       -  Private
+// @Route        -  /api/products/:id
+const updateProduct = asyncHandler(async (req, res) => {
+  const existsProduct = await Product.findById(req.params.id)
+  const {
+    name,
+    description,
+    image,
+    brand,
+    category,
+    price,
+    countInStock,
+    qty,
+  } = req.body
+
+  if (existsProduct) {
+    existsProduct.name = name ? name : existsProduct.name
+    existsProduct.description = description
+      ? description
+      : existsProduct.description
+    existsProduct.image = image ? image : existsProduct.image
+    existsProduct.brand = brand ? brand : existsProduct.brand
+    existsProduct.category = category ? category : existsProduct.category
+    existsProduct.price = price ? price : existsProduct.price
+    existsProduct.countInStock = countInStock
+      ? countInStock
+      : existsProduct.countInStock
+    existsProduct.brand = brand ? brand : existsProduct.brand
+
+    if (qty) {
+      existsProduct.countInStock -= qty
+    }
+
+    const updatedProduct = await existsProduct.save()
+
+    res.json(updatedProduct)
+  } else {
+    res.status(404)
+    throw Error("Product not found!")
+  }
+})
+
+export { getAllProducts, getProduct, deleteProduct, addProduct, updateProduct }
