@@ -8,6 +8,7 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Profile from "./pages/Profile"
 import Checkout from "./pages/Checkout"
+import SpecificOrder from "./pages/SpecificOrder"
 
 export default function App() {
   return (
@@ -38,6 +39,10 @@ export default function App() {
 
       <Route path="/cart/checkout" exact>
         <Checkout />
+      </Route>
+
+      <Route path="/profile/orders/:id" exact>
+        <SpecificOrder />
       </Route>
     </Switch>
   )
