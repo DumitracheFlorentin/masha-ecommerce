@@ -11,6 +11,9 @@ import {
   REMOVE_ITEM_CART_REQUEST,
   REMOVE_ITEM_CART_SUCCESS,
   REMOVE_ITEM_CART_FAIL,
+  CART_CLEAR_REQUEST,
+  CART_CLEAR_SUCCESS,
+  CART_CLEAR_FAIL,
 } from "../constants/cartConstants"
 
 export const cartDetailsReducer = (state = {}, action) => {
@@ -23,6 +26,7 @@ export const cartDetailsReducer = (state = {}, action) => {
 
     case CART_DETAILS_FAIL:
       return { loading: false, error: action.payload }
+
     default:
       return state
   }
@@ -67,6 +71,22 @@ export const removeItemCartReducer = (state = {}, action) => {
       return { loading: false, updatedArray: action.payload }
 
     case REMOVE_ITEM_CART_FAIL:
+      return { loading: false, error: action.payload }
+
+    default:
+      return state
+  }
+}
+
+export const clearCartReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CART_CLEAR_REQUEST:
+      return { loading: true }
+
+    case CART_CLEAR_SUCCESS:
+      return { loading: false, clearCart: action.payload }
+
+    case CART_CLEAR_FAIL:
       return { loading: false, error: action.payload }
 
     default:

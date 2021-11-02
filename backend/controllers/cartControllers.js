@@ -111,4 +111,26 @@ const removeItemCart = asyncHandler(async (req, res) => {
   }
 })
 
-export { detailsCart, createCart, newItemCart, removeItemCart }
+// @Description  -  Clear Cart After Placing An Order
+// @Method       -  PATCH
+// @Access       -  PRIVATE
+// @Route        -  /api/carts/clear
+const clearCart = asyncHandler(async (req, res) => {
+  const userId = req.user.id
+
+  const existsCart = await Cart.findOne({ userId })
+
+  if (existsCart) {
+    existsCart.productItems = []
+
+    const updatedCart = await existsCart.save()
+
+    res.status(204).json(updatedCart)
+  } else {
+    res.status(404)
+
+    throw Error("Cart not found!")
+  }
+})
+
+export { detailsCart, createCart, newItemCart, removeItemCart, clearCart }

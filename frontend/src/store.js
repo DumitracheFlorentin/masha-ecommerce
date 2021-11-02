@@ -19,6 +19,7 @@ import {
   pushItemCartReducer,
   createCartReducer,
   removeItemCartReducer,
+  clearCartReducer,
 } from "./reducers/cartReducers"
 
 import { createOrderReducer } from "./reducers/orderReducers"
@@ -34,6 +35,7 @@ const reducer = combineReducers({
   pushItemCart: pushItemCartReducer,
   createCart: createCartReducer,
   removeItemCart: removeItemCartReducer,
+  clearCart: clearCartReducer,
   createOrder: createOrderReducer,
 })
 

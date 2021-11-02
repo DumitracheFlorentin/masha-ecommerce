@@ -12,6 +12,9 @@ import {
   REMOVE_ITEM_CART_REQUEST,
   REMOVE_ITEM_CART_SUCCESS,
   REMOVE_ITEM_CART_FAIL,
+  CART_CLEAR_REQUEST,
+  CART_CLEAR_SUCCESS,
+  CART_CLEAR_FAIL,
 } from "../constants/cartConstants"
 
 export const cartDetailsAction = (access_token) => async (dispatch) => {
@@ -115,3 +118,29 @@ export const removeItemCartAction =
       })
     }
   }
+
+export const clearCart = (access_token) => async (dispatch) => {
+  try {
+    dispatch({ type: CART_CLEAR_REQUEST })
+
+    const { data } = await axios.patch(
+      "/api/carts/clear",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    )
+
+    dispatch({ type: CART_CLEAR_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: CART_CLEAR_FAIL,
+      payload:
+        error.response && error.response.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
