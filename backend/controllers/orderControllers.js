@@ -85,4 +85,25 @@ const specificOrders = asyncHandler(async (req, res) => {
   }
 })
 
-export { createOrder, deleteOrder, allOrders, specificOrders }
+// @Description  -  Get Specific Order by userId and orderId
+// @Method       -  Get
+// @Access       -  Private
+// @Route        -  /api/orders/specific/:id
+const specificOrder = asyncHandler(async (req, res) => {
+  const id = req.params.id
+  const userId = req.user.id
+
+  console.log(userId)
+
+  const order = await Order.findOne({ _id: id, userId })
+
+  if (order) {
+    res.json(order)
+  } else {
+    res.status(404)
+
+    throw Error("The order does not exist!")
+  }
+})
+
+export { createOrder, deleteOrder, allOrders, specificOrders, specificOrder }

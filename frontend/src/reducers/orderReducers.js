@@ -5,6 +5,9 @@ import {
   SPECIFIC_ORDERS_REQUEST,
   SPECIFIC_ORDERS_SUCCESS,
   SPECIFIC_ORDERS_FAIL,
+  SPECIFIC_ORDER_REQUEST,
+  SPECIFIC_ORDER_SUCCESS,
+  SPECIFIC_ORDER_FAIL,
 } from "../constants/orderConstants"
 
 export const createOrderReducer = (state = {}, action) => {
@@ -32,6 +35,22 @@ export const specificOrdersReducer = (state = {}, action) => {
       return { loading: false, orders: action.payload }
 
     case SPECIFIC_ORDERS_FAIL:
+      return { loading: false, error: action.payload }
+
+    default:
+      return state
+  }
+}
+
+export const specificOrderReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SPECIFIC_ORDER_REQUEST:
+      return { loading: true }
+
+    case SPECIFIC_ORDER_SUCCESS:
+      return { loading: false, order: action.payload }
+
+    case SPECIFIC_ORDER_FAIL:
       return { loading: false, error: action.payload }
 
     default:

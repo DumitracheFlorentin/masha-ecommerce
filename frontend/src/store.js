@@ -26,6 +26,7 @@ import {
 import {
   createOrderReducer,
   specificOrdersReducer,
+  specificOrderReducer,
 } from "./reducers/orderReducers"
 
 const reducer = combineReducers({
@@ -43,6 +44,7 @@ const reducer = combineReducers({
   clearCart: clearCartReducer,
   createOrder: createOrderReducer,
   specificOrders: specificOrdersReducer,
+  specificOrder: specificOrderReducer,
 })
 
 const initialState = {}

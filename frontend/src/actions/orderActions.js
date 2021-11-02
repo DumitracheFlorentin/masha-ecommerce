@@ -6,6 +6,9 @@ import {
   SPECIFIC_ORDERS_REQUEST,
   SPECIFIC_ORDERS_SUCCESS,
   SPECIFIC_ORDERS_FAIL,
+  SPECIFIC_ORDER_REQUEST,
+  SPECIFIC_ORDER_SUCCESS,
+  SPECIFIC_ORDER_FAIL,
 } from "../constants/orderConstants"
 
 export const createOrderAction =
@@ -57,3 +60,26 @@ export const specificOrdersAction = (access_token) => async (dispatch) => {
     })
   }
 }
+
+export const specificOrderAction =
+  (access_token, orderId) => async (dispatch) => {
+    try {
+      dispatch({ type: SPECIFIC_ORDER_REQUEST })
+
+      const { data } = await axios.get(`/api/orders/specific/${orderId}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+
+      dispatch({ type: SPECIFIC_ORDER_SUCCESS, payload: data })
+    } catch (error) {
+      dispatch({
+        type: SPECIFIC_ORDER_FAIL,
+        payload:
+          error.response && error.response.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
