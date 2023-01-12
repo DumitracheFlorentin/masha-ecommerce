@@ -13,7 +13,8 @@ import {
 
 import {
   specificProductAction,
-  updateProductAction
+  updateProductAction,
+  allProductsAction
 } from "../actions/productActions"
 
 
@@ -58,6 +59,7 @@ export default function UpdateProduct() {
       )
     )
 
+    dispatch(allProductsAction())
     history.push('/dashboard')
   }
 

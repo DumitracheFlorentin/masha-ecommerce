@@ -9,7 +9,6 @@ export default function Main() {
     <>
       <Navigation />
       <Container>
-        <h2 className="my-5">Latest Products</h2>
         <Products />
       </Container>
     </>

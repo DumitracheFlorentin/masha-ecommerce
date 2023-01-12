@@ -45,6 +45,11 @@ export default function Navigation() {
           </LinkContainer>
 
           <Nav>
+           <LinkContainer to="/products">
+              <Nav.Link>
+                Products
+              </Nav.Link>
+            </LinkContainer>
             {loggedIn && loggedIn.firstName ? (
               <>
                 <NavDropdown title="Dashboard">
@@ -60,13 +65,6 @@ export default function Navigation() {
                     Log Out
                   </NavDropdown.Item>
                 </NavDropdown>
-
-                <LinkContainer to="/cart">
-                  <Nav.Link>
-                    <FontAwesomeIcon icon={faShoppingCart} className="mx-2" />
-                    Cart
-                  </Nav.Link>
-                </LinkContainer>
               </>
             ) : (
               <>
@@ -75,14 +73,14 @@ export default function Navigation() {
                     <FontAwesomeIcon icon={faUser} className="mx-1" /> Sign In
                   </Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/cart">
-                  <Nav.Link>
-                    <FontAwesomeIcon icon={faShoppingCart} className="mx-2" />
-                    Cart
-                  </Nav.Link>
-                </LinkContainer>
               </>
             )}
+            <LinkContainer to="/cart">
+              <Nav.Link>
+                <FontAwesomeIcon icon={faShoppingCart} className="mx-2" />
+                Cart
+              </Nav.Link>
+            </LinkContainer>
           </Nav>
         </Container>
       </Navbar>

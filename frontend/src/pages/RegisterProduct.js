@@ -11,7 +11,7 @@ import FormContainer from "../components/FormContainer"
 import { userDetailsAction } from "../actions/userActions"
 import { registerProductAction } from "../actions/productActions"
 
-export default function Login() {
+export default function RegisterProduct() {
   const history = useHistory()
   const dispatch = useDispatch()
 
