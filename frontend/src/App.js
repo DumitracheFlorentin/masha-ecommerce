@@ -8,10 +8,12 @@ import SpecificOrder from "./pages/SpecificOrder"
 import Dashboard from "./pages/Dashboard"
 import Register from "./pages/Register"
 import Checkout from "./pages/Checkout"
+import Products from "./pages/Products"
 import Profile from "./pages/Profile"
 import Login from "./pages/Login"
 import Main from "./pages/Main"
 import Cart from "./pages/Cart"
+
 
 export default function App() {
   return (
@@ -58,6 +60,10 @@ export default function App() {
 
       <Route path="/dashboard/products/:id" exact>
         <UpdateProduct />
+      </Route>
+
+      <Route path="/products" exact>
+        <Products />
       </Route>
     </Switch>
   )
