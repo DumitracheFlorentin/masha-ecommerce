@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 import { specificProductAction } from "../actions/productActions"
+import { userDetailsAction } from "../actions/userActions"
 import { pushItemCartAction } from "../actions/cartActions"
 
 // Import Components
@@ -24,8 +25,12 @@ export default function SpecificProduct() {
   const params = useParams()
   const dispatch = useDispatch()
   const specificProduct = useSelector((state) => state.specificProduct)
+  const { loggedIn } = useSelector((state) => state.userDetails)
   const { loading, product, error } = specificProduct
   const [qty, setQty] = useState(1)
+  const token = localStorage.getItem("masha-user-token")
+    ? localStorage.getItem("masha-user-token")
+    : null
 
   const qtyArray = []
 
@@ -50,8 +55,32 @@ export default function SpecificProduct() {
     }
   }
 
+  const addToFavoriteHandler = () => {
+    if (!localStorage.getItem("masha-user-token")) {
+      history.push(`/login`)
+    }
+
+    const favoriteLocalStorage = JSON.parse(localStorage.getItem("masha-user-favorite-list"))
+    
+    if(favoriteLocalStorage && !favoriteLocalStorage[loggedIn.id]) {
+      favoriteLocalStorage[loggedIn.id] = []
+    }
+    const hasFavorite = favoriteLocalStorage && favoriteLocalStorage[loggedIn.id].some(item => item.id === params.id)
+
+    if(!hasFavorite) {
+      favoriteLocalStorage[loggedIn.id] = [...favoriteLocalStorage[loggedIn.id], {
+        id: product._id,
+        name: product.name
+      }]
+    }
+
+    localStorage.setItem("masha-user-favorite-list", JSON.stringify(favoriteLocalStorage))
+    history.push(`/profile`)
+  }
+
   useEffect(() => {
     dispatch(specificProductAction(params.id))
+    dispatch(userDetailsAction(token))
 
     if (localStorage.getItem("masha-security-cart")) {
       localStorage.removeItem("masha-security-cart")
@@ -125,13 +154,24 @@ export default function SpecificProduct() {
                 )}
                 <ListGroup.Item>
                   <Row>
-                    <Button
-                      type="button"
-                      disabled={parseInt(product.countInStock) === 0 && true}
-                      onClick={addToCartHandler}
-                    >
-                      Add To Cart
-                    </Button>
+                    <Col>
+                      <Button
+                        type="button"
+                        disabled={parseInt(product.countInStock) === 0 && true}
+                        onClick={addToCartHandler}
+                      >
+                        Add To Cart
+                      </Button>
+                    </Col>
+                    <Col>
+                      <Button
+                        type="button"
+                        disabled={parseInt(product.countInStock) === 0 && true}
+                        onClick={addToFavoriteHandler}
+                      >
+                        Favorite
+                      </Button>
+                    </Col>
                   </Row>
                 </ListGroup.Item>
               </ListGroup>

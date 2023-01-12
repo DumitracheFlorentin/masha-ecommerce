@@ -32,11 +32,23 @@ export default function Profile() {
   const [firstName, setFirstName] = useState()
   const [lastName, setLastName] = useState()
   const [password, setPassword] = useState()
+  const [favorites, setFavorites] = useState([])
 
   const updateUserDetailsHandler = (e) => {
     e.preventDefault()
 
     dispatch(updateUserAction(token, firstName, lastName, password))
+  }
+
+  const removeFromFavorite = (id) => {
+    const newFavorites = favorites.filter(item => item.id !== id)
+    setFavorites(newFavorites)
+
+    const computedLocalStorage = JSON.parse(localStorage.getItem('masha-user-favorite-list'))
+
+    computedLocalStorage[loggedIn.id] = newFavorites
+
+    localStorage.setItem('masha-user-favorite-list', JSON.stringify(computedLocalStorage))
   }
 
   useEffect(() => {
@@ -62,6 +74,8 @@ export default function Profile() {
       setFirstName(loggedIn.firstName)
       setLastName(loggedIn.lastName)
     }
+
+    loggedIn && setFavorites(JSON.parse(localStorage.getItem('masha-user-favorite-list'))[loggedIn.id])
   }, [loggedIn, loading])
 
   return (
@@ -132,6 +146,7 @@ export default function Profile() {
                 )}
               </Col>
               <Col md={9}>
+                <Row>
                 <h3>Your Orders</h3>
 
                 {specificOrders.loading ? (
@@ -217,6 +232,53 @@ export default function Profile() {
                       })}
                   </ListGroup>
                 )}
+                </Row>
+                <Row>
+                <h3 className="mt-5 mb-3">Your Favorites</h3>
+
+                <ListGroup variant="flush">
+                  {favorites && favorites.length ? favorites.map((favorite, index) => {
+                    return (
+                      <ListGroup.Item key={favorite.id}>
+                          <Row className="orderHover pt-3">
+                            <Col md={2}>
+                              <Link
+                                to={`/products/${favorite.id}`}
+                              >
+                                <strong>Nr.</strong>
+                                <p>{index + 1}</p>
+                              </Link>
+                            </Col>
+                            <Col md={5}>
+                              <Link
+                                to={`/products/${favorite.id}`}
+                              >
+                                <strong>Product ID</strong>
+                                <p>{favorite.id}</p>
+                              </Link>
+                            </Col>
+                            <Col md={3}>
+                              <Link
+                                to={`/products/${favorite.id}`}
+                              >
+                                <strong>Product Name</strong>
+                                <p>{favorite.name}</p>
+                              </Link>
+                            </Col>
+                            <Col md={2}>
+                              <button className="btn btn-danger" onClick={() => removeFromFavorite(favorite.id)}>Delete</button>
+                            </Col>
+                          </Row>
+                      </ListGroup.Item>
+                    )
+                  }): (
+                    <CustomAlert
+                      message="You do not have any favorites"
+                      color="warning"
+                    />
+                  )}
+                </ListGroup>
+                </Row>
               </Col>
             </Row>
           )

@@ -18,6 +18,14 @@ export default function Navigation() {
   const userDetails = useSelector((state) => state.userDetails)
   const { loggedIn } = userDetails
 
+  const favoriteList = localStorage.getItem("masha-user-favorite-list")
+
+  if(!favoriteList && loggedIn) {
+    localStorage.setItem("masha-user-favorite-list", JSON.stringify({
+      [loggedIn.id]: []
+    }))
+  }
+
   const logoutHandler = () => {
     dispatch(logoutAction())
 
