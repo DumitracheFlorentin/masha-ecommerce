@@ -9,6 +9,12 @@ import {
   UPDATE_PRODUCT_REQUEST,
   UPDATE_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_FAIL,
+  REGISTER_PRODUCT_REQUEST,
+  REGISTER_PRODUCT_SUCCESS,
+  REGISTER_PRODUCT_FAIL,
+  DELETE_PRODUCT_REQUEST,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAIL
 } from "../constants/productConstants"
 
 export const allProductsAction = () => async (dispatch) => {
@@ -47,6 +53,24 @@ export const specificProductAction = (id) => async (dispatch) => {
   }
 }
 
+export const deleteProductAction = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_PRODUCT_REQUEST })
+
+    const { data } = await axios.delete(`/api/products/${id}`)
+
+    dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: DELETE_PRODUCT_FAIL,
+      payload:
+        error.response && error.response.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
 export const updateProductAction =
   (id, name, description, image, brand, category, price, countInStock, qty) =>
   async (dispatch) => {
@@ -68,6 +92,33 @@ export const updateProductAction =
     } catch (error) {
       dispatch({
         type: UPDATE_PRODUCT_FAIL,
+        payload:
+          error.response && error.response.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+  export const registerProductAction = (user, name, description, brand, category, price, countInStock) => async (dispatch) => {
+    try {
+      dispatch({ type: REGISTER_PRODUCT_REQUEST })
+
+      const { data } = await axios.post(`/api/products/add`, {
+        user,
+        name, 
+        description, 
+        image: '',
+        brand, 
+        category, 
+        price, 
+        countInStock
+      })
+
+      dispatch({ type: REGISTER_PRODUCT_SUCCESS, payload: data })
+    } catch (error) {
+      dispatch({
+        type: REGISTER_PRODUCT_FAIL,
         payload:
           error.response && error.response.message
             ? error.response.data.message

@@ -1,14 +1,17 @@
 import { Switch, Route } from "react-router-dom"
 
 // Import Pages
-import Main from "./pages/Main"
 import SpecificProduct from "./pages/SpecificProduct"
-import Cart from "./pages/Cart"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import Profile from "./pages/Profile"
-import Checkout from "./pages/Checkout"
+import RegisterProduct from './pages/RegisterProduct'
+import UpdateProduct from './pages/UpdateProduct'
 import SpecificOrder from "./pages/SpecificOrder"
+import Dashboard from "./pages/Dashboard"
+import Register from "./pages/Register"
+import Checkout from "./pages/Checkout"
+import Profile from "./pages/Profile"
+import Login from "./pages/Login"
+import Main from "./pages/Main"
+import Cart from "./pages/Cart"
 
 export default function App() {
   return (
@@ -43,6 +46,18 @@ export default function App() {
 
       <Route path="/profile/orders/:id" exact>
         <SpecificOrder />
+      </Route>
+
+      <Route path="/dashboard" exact>
+        <Dashboard />
+      </Route>
+
+      <Route path="/dashboard/products/register" exact>
+        <RegisterProduct />
+      </Route>
+
+      <Route path="/dashboard/products/:id" exact>
+        <UpdateProduct />
       </Route>
     </Switch>
   )

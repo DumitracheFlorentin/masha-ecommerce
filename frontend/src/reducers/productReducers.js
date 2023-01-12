@@ -32,6 +32,50 @@ export const allProductsReducer = (state = { products: [] }, action) => {
   }
 }
 
+export const addProductReducer = (state = { product: [] }, action) => {
+  switch (action.type) {
+    case SPECIFIC_PRODUCT_REQUEST:
+      return {
+        loading: true,
+      }
+    case SPECIFIC_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        product: action.payload,
+      }
+    case SPECIFIC_PRODUCT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+
+    default:
+      return state
+  }
+}
+
+export const deleteProductReducer = (state = { product: [] }, action) => {
+  switch (action.type) {
+    case SPECIFIC_PRODUCT_REQUEST:
+      return {
+        loading: true,
+      }
+    case SPECIFIC_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        product: action.payload,
+      }
+    case SPECIFIC_PRODUCT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+
+    default:
+      return state
+  }
+}
+
 export const specificProductReducer = (state = { product: [] }, action) => {
   switch (action.type) {
     case SPECIFIC_PRODUCT_REQUEST:

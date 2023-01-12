@@ -43,6 +43,11 @@ export default function Navigation() {
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
+                  {loggedIn.isAdmin && (
+                    <LinkContainer to="/dashboard">
+                      <NavDropdown.Item>Admin</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
                   <NavDropdown.Item type="button" onClick={logoutHandler}>
                     Log Out
                   </NavDropdown.Item>
